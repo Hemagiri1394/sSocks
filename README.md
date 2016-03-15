@@ -1,5 +1,7 @@
 About:
 
+fork from https://github.com/tostercx/ssocks
+
 sSocks是一个跨平台的socks代理工具套装，可用来开启socks代理服务，支持socks5验证，支持IPV6和UDP，并提供反向socks代理服务
 
 **nsocks** 类似通过Socks5代理后的netcat，可用来测试socks server
