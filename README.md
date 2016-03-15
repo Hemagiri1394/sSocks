@@ -1,23 +1,25 @@
 About:
 
-sSocks is a package which contains: a socks5 server implements RFC 1928 (SOCKS V5) 
-and RFC 1929 (Authentication for SOCKS V5), a reverse socks server and client, 
-a netcat like tool, which supports socks5 with authentication 
-and a socks5 relay (run a server and send to a another socks5 server).
+sSocks是一个跨平台的socks代理工具套装，可用来开启socks代理服务，支持socks5验证，支持IPV6和UDP，并提供反向socks代理服务
 
-------------------------------------------------------------------------
+*nsocks* 类似通过Socks5代理后的netcat，可用来测试socks server
 
-Status on windows:
+*ssocksd* 用来开启Socks5代理服务
 
-All tools have been ported and "work". They are still in alpha stage and may not work as expected in all circumstances.
-Daemon / background options are disabled on windows for now.
+*ssocks* 本地启用Socks5服务，并反弹到另一IP地址
 
-------------------------------------------------------------------------
-CI Builds:
+*rcsocks* 接收反弹过来的Socks5服务，并转向另一端口
 
-| Travis | AppVeyor | Win32 binaries |
-|:------:|:--------:|:--------------:|
-| [![Build Status](https://travis-ci.org/tostercx/ssocks.svg?branch=master)](https://travis-ci.org/tostercx/ssocks) | [![Build status](https://ci.appveyor.com/api/projects/status/aoeh16guoj21qfrd/branch/master?svg=true)](https://ci.appveyor.com/project/tostercx/ssocks/branch/master) | [check here](https://ci.appveyor.com/project/tostercx/ssocks/branch/master/artifacts) |
+原项目地址：[sSocks](https://github.com/tostercx/ssocks)
+
+Visual Studio 暂时不支持c99标准，所以无法直接编译从gcc移植过来的代码。
+
+笔者修改了源码，让其在vs下编译通过。
+
+How to use？
+```console
+nmake -f Makefile.nmake
+```
 
 ------------------------------------------------------------------------
 
