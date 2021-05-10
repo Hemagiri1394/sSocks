@@ -110,11 +110,6 @@ void server_relay(char *sockshost, int socksport, int port,
     s_socks_conf conf;
     s_socks_client_config config_cli;
     s_socks_server_config config_srv;
-    char method[] =  { 0x00, 0x02 };
-    char version[] = { SOCKS5_V,
-                       SOCKS4_V
-                     };
-    struct sockaddr_in addrS;
 
 #ifdef _WIN32
     WSADATA wsaData;
@@ -128,7 +123,10 @@ void server_relay(char *sockshost, int socksport, int port,
     conf.config.cli = &config_cli;
     conf.config.srv = &config_srv;
 
-
+    char method[] =  { 0x00, 0x02 };
+    char version[] = { SOCKS5_V,
+                       SOCKS4_V
+                     };
 
     conf.config.srv->n_allowed_version = 1;
     conf.config.srv->allowed_version = version;
@@ -155,6 +153,8 @@ void server_relay(char *sockshost, int socksport, int port,
     /* Init client tab */
     for (nc = 0; nc < MAXCLI; nc++) init_client (&tc[nc], nc, M_DYNAMIC, &conf);
 
+
+    struct sockaddr_in addrS;
     soc_ec = new_listen_socket (NULL, port, MAXCLI, &addrS);
     if (soc_ec < 0) goto fin_serveur;
 
@@ -214,11 +214,10 @@ fin_serveur:
 
 
 void parseArg(int argc, char *argv[]) {
-    int c;
-    char *port;
     memset(&globalArgs, 0, sizeof(globalArgs));
     globalArgs.listen = 1080;
-    
+
+    int c;
     while (1) {
         static struct option long_options[] = {
             {"help",    no_argument,       0, 'h'},
@@ -244,7 +243,7 @@ void parseArg(int argc, char *argv[]) {
         if (c == -1)
             break;
 
-        
+        char *port;
 
         switch (c)	{
         case 0:

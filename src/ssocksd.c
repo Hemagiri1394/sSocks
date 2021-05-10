@@ -273,11 +273,6 @@ void server(const char *bindAddr, int port, int ssl) {
     fd_set set_write;
     struct sockaddr_in addrS;
     char methods[2];
-    s_socks_conf conf;
-    s_socks_server_config config;
-    char versions[] = { SOCKS5_V,
-                        SOCKS4_V
-                      };
 
 #ifdef _WIN32
     WSADATA wsaData;
@@ -288,7 +283,14 @@ void server(const char *bindAddr, int port, int ssl) {
     }
 #endif
 
+    s_socks_conf conf;
+    s_socks_server_config config;
     conf.config.srv = &config;
+
+    char versions[] = { SOCKS5_V,
+                        SOCKS4_V
+                      };
+
     config.allowed_version = versions;
     config.n_allowed_version = sizeof(versions);
 

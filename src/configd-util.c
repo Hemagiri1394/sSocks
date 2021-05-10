@@ -47,15 +47,13 @@ int loadConfigFile(char *filename, struct globalArgsServer_t *c) {
     char var[255];
     char val[255];
     char buf[510];
-    FILE *fp;
 
     TRACE(L_DEBUG, "config: open file %s ...", filename);
 
 
-    fp = fopen(filename, "r");
+    FILE *fp = fopen(filename, "r");
     if ( fp == 0 ) {
         ERROR(L_NOTICE, "config: can't open file %s", filename);
-        //perror("fopen");
         return -1;
     }
 
@@ -65,10 +63,7 @@ int loadConfigFile(char *filename, struct globalArgsServer_t *c) {
 
         k = sscanf(buf, "%254[^#=]=%254[^\n]\n", var, val);
 
-        //printf("%d\n", k);
         if ( k != 2 ) {
-            //TRACE(L_VERBOSE, "config: file malformated");
-            //break;
             continue;
         }
         trim(var);
@@ -132,7 +127,6 @@ int writePID(char *filename) {
     fprintf(fp, "%ld\n", (long)getpid());
     fclose(fp);
 
-    /* atexit((void(*)()) removePID); */
     return 0;
 }
 
@@ -182,8 +176,7 @@ void background() {
 
 /* Fast hack for secure strcpy, to lazy to check if is trully secure */
 char *strncpy_sx(char *dest, const char *src, size_t n) {
-    char *s;
     dest[n] = 0;
-    s = strncpy(dest, src, n-1);
+    char *s = strncpy(dest, src, n-1);
     return s;
 }

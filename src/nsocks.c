@@ -132,7 +132,6 @@ void netcat_like(s_socket *s) {
                     ERROR(L_DEBUG, "client: read 0 bytes on stdin");
                     boucle_princ = 0;
                 }
-                //printf("client: read %d bytes in stdin\n", k);
                 buf_b += k;
             }
 #endif
@@ -197,7 +196,6 @@ void netcat_like(s_socket *s) {
                     perror("write socket");
                     boucle_princ = 0;
                 }
-                //printf("client: wrote %d bytes on socket\n", k);
                 buf_a += k;
                 if ( buf_b - buf_a == 0 ) {
                     buf_b = 0;
@@ -245,7 +243,7 @@ void netcat_socks(char *sockshost, int socksport,
                   char *uname, char *passwd,
                   int ssl) {
     s_socket s;
-    int r;
+
 #ifdef _WIN32
     WSADATA wsaData;
     int wsaInit = WSAStartup(MAKEWORD(2,2), &wsaData);
@@ -255,7 +253,7 @@ void netcat_socks(char *sockshost, int socksport,
     }
 #endif
 
-    r = new_socket_with_socks(&s, sockshost, socksport,
+    int r = new_socket_with_socks(&s, sockshost, socksport,
                                   uname, passwd, host, port, listen,
                                   SOCKS5_V, ssl,
                                   (listen != 0) ? CMD_BIND : CMD_CONNECT);
@@ -307,11 +305,9 @@ void usage(char *name) {
 }
 
 void parseArg(int argc, char *argv[]) {
-	int c;
-	char *port;
     memset(&globalArgs, 0, sizeof(globalArgs));
 
-    
+    int c;
     while (1) {
         static struct option long_options[] = {
             {"help",    no_argument,       0, 'h'},
@@ -336,6 +332,7 @@ void parseArg(int argc, char *argv[]) {
         if (c == -1)
             break;
 
+        char *port;
 
         switch (c)	{
         case 0:

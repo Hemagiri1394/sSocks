@@ -107,8 +107,6 @@ void reverse_server(char *sockshost, int socksport,
     s_socks_conf conf;
     s_socks_client_config config_cli;
     s_socks_server_config config_srv;
-    char method[] =  { 0x00, 0x02 };
-    char version[] = { SOCKS5_V };
 
 #ifdef _WIN32
     WSADATA wsaData;
@@ -122,7 +120,8 @@ void reverse_server(char *sockshost, int socksport,
     conf.config.cli = &config_cli;
     conf.config.srv = &config_srv;
 
-
+    char method[] =  { 0x00, 0x02 };
+    char version[] = { SOCKS5_V };
     conf.config.srv->n_allowed_version = 1;
     conf.config.srv->allowed_version = version;
     conf.config.srv->n_allowed_method = 1;
@@ -205,11 +204,9 @@ void reverse_server(char *sockshost, int socksport,
 
 
 void parse_arg(int argc, char *argv[]) {
-    int c;
-    char *port;
     memset(&globalArgs, 0, sizeof(globalArgs));
     globalArgs.ncon = 25;
-
+    int c;
     while (1) {
         static struct option long_options[] = {
             {"help",    no_argument,       0, 'h'},
@@ -235,6 +232,7 @@ void parse_arg(int argc, char *argv[]) {
         if (c == -1)
             break;
 
+        char *port;
 
         switch (c)	{
         case 0:

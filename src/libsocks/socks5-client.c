@@ -271,9 +271,6 @@ int test_auth_ack(s_socks *s, s_socks_conf *c, s_buffer *buf)
 void build_request(s_socks *s, s_socks_conf *c, s_buffer *buf)
 {
     Socks5Req req;
-    char *host;
-    short port;
-    int hostlen;
     init_buffer(buf);
 
     TRACE(L_DEBUG, "client: build request packet ...");
@@ -287,7 +284,8 @@ void build_request(s_socks *s, s_socks_conf *c, s_buffer *buf)
     req.rsv = 0x00;
     req.atyp = 0x03;
 
-
+    char *host;
+    short port;
 
     req.cmd = s->cmd = c->config.cli->cmd;
 
@@ -304,7 +302,7 @@ void build_request(s_socks *s, s_socks_conf *c, s_buffer *buf)
     }
 
     /* Recover destination host and port form the config */
-    hostlen = strlen(host);
+    int hostlen = strlen(host);
 
 
     /* Copy the request in the req buffer */
@@ -726,11 +724,9 @@ int new_socket_with_socks(s_socket *s,
 
     s_socks_conf conf;
     s_socks_client_config config;
-    char method[] =  { 0x00, 0x02 };
-    s_client c;
     conf.config.cli = &config;
 
-    
+    char method[] =  { 0x00, 0x02 };
     conf.config.cli->n_allowed_method = 2;
     conf.config.cli->allowed_method = method;
 
@@ -749,7 +745,7 @@ int new_socket_with_socks(s_socket *s,
 
     //memcpy(&conf.config, &config, sizeof(s_socks_serv_cli_config));
 
-    
+    s_client c;
     init_client (&c, 0, M_CLIENT, &conf);
 
     c.soc.soc = new_client_socket(sockshost, socksport,

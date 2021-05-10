@@ -26,6 +26,7 @@
  * THE SOFTWARE.
  */
 
+#include "socks4.h"
 #include "socks-common.h"
 #include "socks5-server.h"
 #include "net-util.h"
@@ -69,14 +70,13 @@
 int test_version(s_socks *s, s_socks_conf *c, s_buffer *buf) {
     int i, j;
     Socks5Version req;
-    char *allowed;
     TRACE(L_DEBUG, "server [%d]: testing version ...",
           s->id);
 
     memcpy(&req, buf->data, sizeof(Socks5Version));
 
     /* Testing version */
-    
+    char *allowed;
     for (i=0; i <  c->config.srv->n_allowed_version; ++i) {
         allowed = &c->config.srv->allowed_version[i];
         if ( *allowed == req.ver ) {
@@ -346,15 +346,14 @@ int analyse_request(s_socks *s, s_socket *stream, s_socket *bind,
                     s_socks_conf *c, s_buffer *buf)
 {
     Socks5Req req;
+    TRACE(L_DEBUG, "server [%d]: testing client request ...",
+          s->id);
+
     uint16_t port = 0, *p;
     char domain[256];
     char chAddr[4];
     uint8_t l;
     struct in_addr addr;
-    TRACE(L_DEBUG, "server [%d]: testing client request ...",
-          s->id);
-
-
     /* Rebuild the packet but don't extract
      * DST.ADDR and DST.PORT in Socks5Req struct */
     memcpy(&req, buf->data, sizeof(Socks5Req));
@@ -992,9 +991,9 @@ int init_select_server_reverse (s_client *tc, int *maxfd,
                                 int ncon, fd_set *set_read, fd_set *set_write, int ssl)
 {
     /* Security to avoid segmentation fault on tc tab */
-    int nc, cpt = 0;
     if ( ncon >= MAXCLI ) ncon = MAXCLI-1;
 
+    int nc, cpt = 0;
 
     FD_ZERO (set_read);
     FD_ZERO (set_write);

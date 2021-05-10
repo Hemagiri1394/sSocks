@@ -48,20 +48,17 @@ int ncred = 0;
 int load_auth_file(char *filename) {
     int k;
     char *line = NULL;
-    FILE *fp;
     char buf[(MAX_AUTH_UNAME*2)+1];
 
     TRACE(L_DEBUG, "auth: open file %s ...", filename);
-    fp = fopen(filename, "r");
+    FILE *fp = fopen(filename, "r");
 
     if ( fp == 0 ) {
-        //perror("fopen");
         ERROR(L_NOTICE, "auth: can't open file %s", filename);
         return -1;
     }
 
     while(ncred < MAX_AUTH_LOGIN && !feof(fp) ) {
-        //printf("line : %s\n", fp);
         if(fgets(buf, sizeof(buf), fp) == NULL)
             break;
 
@@ -69,8 +66,6 @@ int load_auth_file(char *filename) {
         k = sscanf(buf, "%254[^#:]:%254s", tcred[ncred].uname, tcred[ncred].passwd);
 
         if ( k != 2 ) {
-            /* Error or comment or blank line */
-            /*TRACE(L_VERBOSE, "auth: file config format error");*/
             continue;
         }
         /* Avoid whitespace maybe fscanf can do this */
