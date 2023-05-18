@@ -12,10 +12,6 @@ sSocks是一个跨平台的socks代理工具套装，可用来开启socks代理�
 
 原项目地址：
 
-- [sSocks](https://github.com/tostercx/ssocks)
-
-- [sSocks](https://sourceforge.net/projects/ssocks/)
-
 ## How to use？
 
 Windows Visual Studio 2019 编译
